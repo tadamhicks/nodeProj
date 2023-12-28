@@ -1,0 +1,4 @@
+.pnpm-store
+.idea
+dist
+node_modules
