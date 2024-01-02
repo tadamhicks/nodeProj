@@ -23,4 +23,4 @@ if (require.main === module) {
     console.log('Seeded database');
     process.exit();
   });
-};
+}
