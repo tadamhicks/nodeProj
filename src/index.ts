@@ -26,6 +26,23 @@ app.get('/posts/:id', async (req, res) => {
   res.json(post);
 });
 
+app.get("/posts/unpublished", async (req, res) => {
+  const posts = await db.post.findMany({
+    where: { publishedAt: null },
+  });
+  res.json(posts);
+});
+
+app.delete("/posts/:id", async (req, res) => {
+  const { id } = req.params;
+  const post = await db.post.delete({
+    where: {
+      id: String(id),
+    },
+  });
+  res.json(post);
+});
+
 const port = Number(process.env.PORT || 8080);
 app.listen(port, '0.0.0.0', () => {
   console.log(`Listening at http://localhost:${port}`);
