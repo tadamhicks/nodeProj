@@ -6,7 +6,9 @@ WORKDIR /usr/src/app
 
 COPY nscacert_combined.pem ./certs
 
-ENV NODE_TLS_REJECT_UNAUTHORIZED=0 # Remove for Production
+# Remove for prod
+ENV NODE_TLS_REJECT_UNAUTHORIZED=0
+
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
