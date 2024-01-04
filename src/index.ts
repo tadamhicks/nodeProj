@@ -6,7 +6,7 @@ const app = express();
 app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Hello World!' });
+  res.json({ message: 'Hello Martha!' });
 });
 app.get('/posts', async (req, res) => {
   const posts = await db.post.findMany({
@@ -26,14 +26,14 @@ app.get('/posts/:id', async (req, res) => {
   res.json(post);
 });
 
-app.get("/posts/unpublished", async (req, res) => {
+app.get('/unpublished', async (req, res) => {
   const posts = await db.post.findMany({
     where: { publishedAt: null },
   });
   res.json(posts);
 });
 
-app.delete("/posts/:id", async (req, res) => {
+app.delete('/posts/:id', async (req, res) => {
   const { id } = req.params;
   const post = await db.post.delete({
     where: {
