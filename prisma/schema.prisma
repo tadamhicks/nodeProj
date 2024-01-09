@@ -11,14 +11,49 @@ datasource db {
 }
 
 model Post {
-  id          String @id
-  slug        String @unique
+  id          String    @id
+  slug        String    @unique
   title       String
   content     String?
   publishedAt DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@index([publishedAt])
   @@map("posts")
+}
+
+model User {
+  id        String   @id
+  email     String   @unique
+  firstName String?
+  lastName  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relation fields
+  tokens Token[]
+
+  @@map("users")
+}
+
+model Token {
+  id         String    @id
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  type       TokenType
+  emailToken String?   @unique
+  valid      Boolean   @default(true)
+  expiration DateTime?
+
+  // Relation fields
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@map("tokens")
+}
+
+enum TokenType {
+  EMAIL
+  API
 }
